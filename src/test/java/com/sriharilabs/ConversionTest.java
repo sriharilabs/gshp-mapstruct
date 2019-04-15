@@ -18,6 +18,8 @@
  */
 package com.sriharilabs;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 //import static org.junit.Assert.assertThat;
@@ -37,22 +39,23 @@ public class ConversionTest {
         Target target = SourceTargetMapper.INSTANCE.sourceToTarget(source);
 
         System.out.println(target.getQax());
-       // assertThat(target).isNotNull();
-        // assertThat(target.getFoo()).isEqualTo(42L);
-        // assertThat(target.getBar()).isEqualTo(23);
-        // assertThat(target.getZip()).isEqualTo("73");
+        assertNotNull(target);
+         assertThat(target.getFoo(), is(42L));
+         assertThat(target.getBar(), is(23));
+         assertThat(target.getBar(), is("73"));
     }
 
     @Test
     public void shouldHandleNulls() {
         Source source = new Source();
         Target target = SourceTargetMapper.INSTANCE.sourceToTarget(source);
+        
+        assertNotNull(target);
+        assertThat(target.getFoo(), is(0L));
+        assertThat(target.getBar(), is(0));
+        assertThat(target.getZip(), is("0"));
 
-		/*
-		 * assertThat(target).isNotNull(); assertThat(target.getFoo()).isEqualTo(0L);
-		 * assertThat(target.getBar()).isEqualTo(0);
-		 * assertThat(target.getZip()).isEqualTo("0");
-		 */
+		
     }
 
     @Test
@@ -62,10 +65,9 @@ public class ConversionTest {
         source.setBaz(23L);
 
         Target target = SourceTargetMapper.INSTANCE.sourceToTarget(source);
-//
-//        assertThat(target).isNotNull();
-//        assertThat(target.getBaz()).isEqualTo(42L);
-//        assertThat(target.getQax()).isEqualTo(23);
+        assertNotNull(target);
+        assertThat(target.getBaz(), is(42L));
+        assertThat(target.getQax(), is(23));
     }
 
     @Test
@@ -76,12 +78,11 @@ public class ConversionTest {
         target.setZip("73");
 
         Source source = SourceTargetMapper.INSTANCE.targetToSource(target);
-
-		/*
-		 * assertThat(source).isNotNull(); assertThat(source.getFoo()).isEqualTo(42);
-		 * assertThat(source.getBar()).isEqualTo(23);
-		 * assertThat(source.getZip()).isEqualTo(73);
-		 */
+        assertNotNull(target);
+        assertThat(target.getFoo(), is(42L));
+        assertThat(target.getBar(), is(23));
+        assertThat(target.getZip(), is("73"));
+		
     }
 
     @Test
@@ -91,6 +92,8 @@ public class ConversionTest {
         target.setBaz(23L);
 
         Source source = SourceTargetMapper.INSTANCE.targetToSource(target);
+        assertThat(target.getQax(), is(42));
+        assertThat(target.getBaz(), is(23L));
 		/*
 		 * assertThat(source).isNotNull(); assertThat(source.getBaz()).isEqualTo(42);
 		 * assertThat(source.getQax()).isEqualTo(23);
